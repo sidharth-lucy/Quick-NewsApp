@@ -90,3 +90,4 @@ app/release/output.json
 
 #custom file for secretkey
 SecretKeys.kt
+SecretAPiKeys.kt
