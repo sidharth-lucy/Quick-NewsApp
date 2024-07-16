@@ -89,3 +89,4 @@ app/release/output.json
 .idea/codeStyles/
 
 #custom file for secretkey
+APISecretKeysFile.kt
