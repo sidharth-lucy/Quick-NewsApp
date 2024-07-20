@@ -17,3 +17,8 @@ val DarkRed = Color(0xFFC30052) //Dark Error
 val LightRed = Color(0xFFFF84B7)
 
 val LightBlack = Color(0xFF3A3B3C) //Dark Surface
+
+val Color_2600BE_50 = Color(0x802600BE)
+val Color_760181_50 = Color(0x80760181)
+val Color_280047 = Color(0xFF280047)
+val Color_FFFFFF_50 = Color(0x80FFFFFF)
