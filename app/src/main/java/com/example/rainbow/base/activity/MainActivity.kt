@@ -11,14 +11,14 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.composenewsapp.news.navigation.NavGraph
-import com.example.composenewsapp.news.viewmodel.MainActivityViewModel
+import com.example.rainbow.base.viewmodel.MainActivityViewModel
 import com.example.rainbow.ui.theme.ComposeNewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    private val viewModel:MainActivityViewModel by lazy {
+    private val viewModel: MainActivityViewModel by lazy {
         ViewModelProvider(this)[MainActivityViewModel::class.java]
     }
 
