@@ -1,13 +1,10 @@
 package com.example.rainbow.base.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.NavHost
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navigation
-import com.example.composenewsapp.news.navigation.NewsNavigator
 import com.example.composenewsapp.news.navigation.Route
 import com.example.composenewsapp.news.screen.OnboardingScreen
 

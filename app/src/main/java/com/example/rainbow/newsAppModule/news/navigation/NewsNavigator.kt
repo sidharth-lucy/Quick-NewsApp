@@ -11,6 +11,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
@@ -31,7 +32,7 @@ import com.example.rainbow.newsAppModule.news.viewmodel.BookmarksScreenViewModel
 
 
 @Composable
-fun NewsNavigator() {
+fun NewsNavigator(appModuleMenuClicked:()->Unit) {
     val bottomNavigationItems = remember {
         listOf(
             BottomNavigationBarItem("home", R.drawable.ic_home),
@@ -99,7 +100,7 @@ fun NewsNavigator() {
                     },
                     navigateToDetail = {
                         navigateToDetailPage(navController,Route.DetailScreen.route,it)
-                })
+                    }, appModuleMenuClicked)
             }
 
             composable(route= Route.DetailScreen.route){
@@ -161,4 +162,10 @@ fun navigateToTab(navController: NavController, route: String) {
 fun navigateToDetailPage(navController: NavController, route: String,article: Article){
     navController.currentBackStackEntry?.savedStateHandle?.set("article", article)
     navController.navigate(route= route)
+}
+
+@Preview
+@Composable
+private fun NewsNavigatorPrev() {
+    
 }

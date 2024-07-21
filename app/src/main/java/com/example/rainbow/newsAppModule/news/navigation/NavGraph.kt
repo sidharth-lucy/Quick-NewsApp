@@ -32,7 +32,9 @@ fun NavGraph(startDestination: String, saveAppStartData: () -> Unit) {
             startDestination = Route.NewsNavigatorScreen.route
         ) {
             composable(route = Route.NewsNavigatorScreen.route) {
-                NewsNavigator()
+                NewsNavigator(appModuleMenuClicked = {
+                    
+                })
             }
 
         }
