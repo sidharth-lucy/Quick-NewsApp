@@ -8,6 +8,7 @@ sealed class Route(val route:String){
 
     //Base App Module
     data object AppModuleNavigation:Route("appModuleNavigation")
+    data object AppModuleNavigationScreen:Route("appModuleNavigationScreen")
 
     //News Module
     data object NewsNavigationScreen:Route("newsNavigation")

@@ -11,6 +11,7 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.composenewsapp.news.navigation.NavGraph
+import com.example.rainbow.base.navigation.BaseNavGraph
 import com.example.rainbow.base.viewmodel.MainActivityViewModel
 import com.example.rainbow.ui.theme.ComposeNewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -37,7 +38,7 @@ class MainActivity : ComponentActivity() {
             ComposeNewsAppTheme {
                 Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
                     val startDestination = viewModel.startDestination
-                    NavGraph(startDestination =startDestination.value ){
+                    BaseNavGraph(startDestination =startDestination.value ){
                         viewModel.saveUserAppEntry(true)
                     }
                 }

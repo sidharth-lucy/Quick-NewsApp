@@ -36,7 +36,7 @@ class MainActivityViewModel @Inject constructor(private val prefDataStore: PrefD
             prefDataStore.getAppOnboarding().collect{
                 _userDataLiveData.postValue(it)
                 if(it){
-                    startDestination.value = Route.NewsNavigationScreen.route
+                    startDestination.value = Route.AppModuleNavigation.route
                 }else{
                     startDestination.value = Route.AppStartNavigation.route
                 }

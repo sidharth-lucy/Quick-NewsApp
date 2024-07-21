@@ -26,9 +26,9 @@ fun BaseNavGraph(startDestination:String,saveAppStartData: () -> Unit) {
 
         navigation(
             route = Route.AppModuleNavigation.route,
-            startDestination= Route.AppModuleNavigation.route
+            startDestination= Route.AppModuleNavigationScreen.route
         ){
-            composable(route=Route.AppModuleNavigation.route){
+            composable(route=Route.AppModuleNavigationScreen.route){
                 AppModuleBaseNavigator()
             }
         }
