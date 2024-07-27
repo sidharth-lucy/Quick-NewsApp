@@ -20,11 +20,3 @@ sealed class Route(val route:String){
 
 }
 
-
-
-
-//sealed class CreditLineVerifyOtp{
-//    object Loading : CreditLineVerifyOtp()
-//    data class  Success(val creditLineForm : com.etmoney.loan.creditline.data.source.local.entity.CreditLineForm) : CreditLineVerifyOtp()
-//    data class Error(val errorMessage : String,var otpError : OtpResponseError?) : CreditLineVerifyOtp()
-//}

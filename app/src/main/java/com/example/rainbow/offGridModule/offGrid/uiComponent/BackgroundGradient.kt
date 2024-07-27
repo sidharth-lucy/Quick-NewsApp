@@ -1,6 +1,7 @@
 package com.example.rainbow.offGridModule.offGrid.uiComponent
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxScope
@@ -13,12 +14,14 @@ import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.composenewsapp.R
+import com.example.rainbow.offGridModule.offGrid.enums.TopNavigationButtonAction
 import com.example.rainbow.ui.theme.Color_2600BE_50
 import com.example.rainbow.ui.theme.Color_280047
 import com.example.rainbow.ui.theme.Color_760181_50
@@ -71,6 +74,29 @@ fun BackgroundGradient(
     )
 }
 
+@Composable
+fun TopNavigationIcons(modifier: Modifier = Modifier,topNavigationAction:(TopNavigationButtonAction)->Unit) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(horizontal = Dimens.padding_24, vertical = Dimens.padding_40),
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Icon(
+            modifier = Modifier.clickable { topNavigationAction(TopNavigationButtonAction.NavigationBackButtonAction) },
+            painter = painterResource(id = R.drawable.ic_back_arrow_icon),
+            contentDescription = "back",
+            tint = Color.White
+        )
+        Icon(
+            modifier = Modifier.clickable { topNavigationAction(TopNavigationButtonAction.NavigationMoreButtonAction) },
+            painter = painterResource(id = R.drawable.ic_two_dot_menu_icon),
+            contentDescription = "back",
+            tint = Color.White
+        )
+    }
+}
+
 
 @Preview
 @Composable
@@ -78,5 +104,11 @@ private fun BackgroundGradientPrev() {
     BackgroundGradient(modifier = Modifier){}
 }
 
+
+@Preview
+@Composable
+private fun TopNavigationIconsPrev() {
+    TopNavigationIcons(topNavigationAction = {})
+} 
 
 
