@@ -79,7 +79,7 @@ fun SongInformationCard(
         modifier = modifier
 //            .width((290.dp) * (1 - pageOffset))
             .fillMaxWidth((0.8f) * (1 - pageOffset))
-            .clip(shape = RoundedCornerShape(20.dp)),
+            .clip(shape = RoundedCornerShape(Dimens.padding_20)),
 
         ) {
         MusicItemComponent(modifier= Modifier,pageOffset=pageOffset, itemData = ccc)
@@ -102,7 +102,7 @@ fun MusicItemComponent(modifier: Modifier = Modifier,pageOffset:Float, itemData:
             modifier= Modifier
                 .fillMaxWidth()
                 .padding(0.5.dp)
-                .clip(RoundedCornerShape(20.dp))
+                .clip(RoundedCornerShape(Dimens.padding_20))
                 .aspectRatio(1f)
                 .background(Color.Transparent)
                 .graphicsLayer {

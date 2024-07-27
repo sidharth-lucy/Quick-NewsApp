@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -49,14 +48,14 @@ fun NewsNavigator(appModuleMenuClicked:()->Unit) {
 
         
     selectedItem.value = when (backStackState?.destination?.route) {
-        Route.HomeScreen.route -> 0
+        NewAppRoute.HomeScreen.route -> 0
 //        Route.SearchScreen.route -> 1
-        Route.BookMarkScreen.route -> 1
+        NewAppRoute.BookMarkScreen.route -> 1
         else -> 0
     }
 
     val isBottomNavVisible = remember(key1 = backStackState) {
-        backStackState?.destination?.route in listOf(Route.HomeScreen.route, Route.BookMarkScreen.route)
+        backStackState?.destination?.route in listOf(NewAppRoute.HomeScreen.route, NewAppRoute.BookMarkScreen.route)
     }
 
     Scaffold(
@@ -66,7 +65,7 @@ fun NewsNavigator(appModuleMenuClicked:()->Unit) {
                 NewsBottomNavigationBar(Modifier, bottomNavigationItems, selected = selectedItem.value, onItemClicked = {
                     when (it) {
                         0 -> {
-                            navigateToTab(navController, Route.HomeScreen.route)
+                            navigateToTab(navController, NewAppRoute.HomeScreen.route)
                         }
 
 //                        1 -> {
@@ -74,7 +73,7 @@ fun NewsNavigator(appModuleMenuClicked:()->Unit) {
 //                        }
 
                         1 -> {
-                            navigateToTab(navController, Route.BookMarkScreen.route)
+                            navigateToTab(navController, NewAppRoute.BookMarkScreen.route)
                         }
                     }
                 })
@@ -83,10 +82,10 @@ fun NewsNavigator(appModuleMenuClicked:()->Unit) {
         val bottomPadding = it.calculateBottomPadding()
         NavHost(
             navController = navController,
-            startDestination = Route.HomeScreen.route,
+            startDestination = NewAppRoute.HomeScreen.route,
             modifier = Modifier.padding(bottom = bottomPadding)
         ) {
-            composable(route= Route.HomeScreen.route){
+            composable(route= NewAppRoute.HomeScreen.route){
                 val viewModel: HomeViewModel = hiltViewModel()
                 val searchState = remember {
                     mutableStateOf("")
@@ -99,11 +98,11 @@ fun NewsNavigator(appModuleMenuClicked:()->Unit) {
                         searchState.value = it
                     },
                     navigateToDetail = {
-                        navigateToDetailPage(navController,Route.DetailScreen.route,it)
+                        navigateToDetailPage(navController,NewAppRoute.DetailScreen.route,it)
                     }, appModuleMenuClicked)
             }
 
-            composable(route= Route.DetailScreen.route){
+            composable(route= NewAppRoute.DetailScreen.route){
                 val context = LocalContext.current
                 navController.previousBackStackEntry?.savedStateHandle?.get<Article>("article")?.let {
                     val detailViewModel:DetailScreenViewModel = hiltViewModel()
@@ -121,7 +120,7 @@ fun NewsNavigator(appModuleMenuClicked:()->Unit) {
                 }
             }
 
-            composable(route= Route.BookMarkScreen.route){
+            composable(route= NewAppRoute.BookMarkScreen.route){
 
                 val bookmarkViewmodel: BookmarksScreenViewModel = hiltViewModel()
 
@@ -133,7 +132,7 @@ fun NewsNavigator(appModuleMenuClicked:()->Unit) {
                 BookMarkArticleListScreen(modifier = Modifier,
                     article = bookmarkViewmodel.allBookmarkArticle.value,
                     onArticleClick = {
-                        navigateToDetailPage(navController,Route.DetailScreen.route,it)
+                        navigateToDetailPage(navController,NewAppRoute.DetailScreen.route,it)
                     },
                     onDeleteArticle = {
                     //delete logic

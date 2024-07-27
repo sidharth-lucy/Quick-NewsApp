@@ -86,7 +86,6 @@ fun HomeScreenpage(
                     appModuleMenuClicked()
                 },
                 imageVector = Icons.Default.Menu,
-                tint = colorResource(id = R.color.purple_700),
                 contentDescription = "Menu"
             )
             Image(

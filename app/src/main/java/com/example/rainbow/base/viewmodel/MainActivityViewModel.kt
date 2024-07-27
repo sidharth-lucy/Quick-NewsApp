@@ -5,7 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.composenewsapp.news.navigation.Route
+import com.example.rainbow.base.navigation.BaseRoute
 import com.example.rainbow.newsAppModule.data.PrefDataStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
@@ -22,7 +22,7 @@ class MainActivityViewModel @Inject constructor(private val prefDataStore: PrefD
     private val _splashCondition = mutableStateOf(true)
     val splashCondition:State<Boolean> = _splashCondition
 
-    var startDestination = mutableStateOf(Route.AppStartNavigation.route)
+    var startDestination = mutableStateOf(BaseRoute.AppStartNavigation.route)
         private set
 
     fun saveUserAppEntry(data:Boolean){
@@ -36,9 +36,9 @@ class MainActivityViewModel @Inject constructor(private val prefDataStore: PrefD
             prefDataStore.getAppOnboarding().collect{
                 _userDataLiveData.postValue(it)
                 if(it){
-                    startDestination.value = Route.AppModuleNavigation.route
+                    startDestination.value = BaseRoute.AppModuleNavigation.route
                 }else{
-                    startDestination.value = Route.AppStartNavigation.route
+                    startDestination.value = BaseRoute.AppStartNavigation.route
                 }
                 delay(300)
                 _splashCondition.value = false

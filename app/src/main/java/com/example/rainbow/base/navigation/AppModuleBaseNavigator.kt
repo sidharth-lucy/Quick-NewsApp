@@ -15,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.composenewsapp.news.navigation.NewsNavigator
+import com.example.rainbow.offGridModule.offGrid.navigation.OffGridNavigator
 import kotlinx.coroutines.launch
 
 
@@ -52,9 +53,8 @@ fun AppModuleBaseNavigator() {
                 })
             }
             AppModuleType.MUSIC_APP_MODULE->{
-                Log.d("sksks",AppModuleType.MUSIC_APP_MODULE.name)
+                OffGridNavigator()
             }
         }
     }
 }
-//https://medium.com/@ndtminh2608/extract-youtube-streaming-data-in-your-android-app-with-kotlin-youtubeextractor-1c93e6db128e

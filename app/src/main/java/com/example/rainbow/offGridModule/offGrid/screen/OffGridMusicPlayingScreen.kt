@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import com.example.composenewsapp.R
 import com.example.composenewsapp.news.uiComponent.background
 import com.example.rainbow.offGridModule.offGrid.datamodel.SongData
+import com.example.rainbow.offGridModule.offGrid.enums.TopNavigationButtonAction
 import com.example.rainbow.offGridModule.offGrid.uiComponent.BackgroundGradient
 import com.example.rainbow.offGridModule.offGrid.uiComponent.HorizontalMusicScroll
 import com.example.rainbow.offGridModule.offGrid.uiComponent.HorizontalPagerWithAnimation
@@ -42,12 +43,10 @@ import values.Dimens
 
 
 @Composable
-fun OffGridMusicPlayingScreen(modifier: Modifier = Modifier, data: List<SongData> = emptyList()) {
+fun OffGridMusicPlayingScreen(modifier: Modifier = Modifier, data: List<SongData> = emptyList(), topNavigationButtonAction:(TopNavigationButtonAction)->Unit) {
     BackgroundGradient(modifier = modifier) {
         Column(modifier = Modifier.fillMaxWidth()) {
-            TopNavigationIcons(modifier=Modifier, topNavigationAction = {navActionType->
-
-            })
+            TopNavigationIcons(modifier=Modifier, topNavigationAction = topNavigationButtonAction)
 
             HorizontalPagerWithAnimation(data = data)
 
@@ -86,7 +85,7 @@ fun OffGridMusicPlayingScreen(modifier: Modifier = Modifier, data: List<SongData
 @Composable
 @Preview(showBackground = true)
 fun OffGridMusicPlayingScreenPrev(modifier: Modifier = Modifier) {
-    OffGridMusicPlayingScreen(modifier = Modifier, data = data)
+    OffGridMusicPlayingScreen(modifier = Modifier, data = data, topNavigationButtonAction = {})
 }
 
 

@@ -3,6 +3,7 @@ package values
 import androidx.compose.ui.unit.dp
 
 object Dimens {
+    val padding_0 = 0.dp
     val padding_1 = 1.dp
     val padding_2 = 2.dp
     val padding_3 = 3.dp
@@ -186,4 +187,5 @@ object Dimens {
     val padding_248 =248.dp
     val padding_249 =249.dp
     val padding_250 = 250.dp
+    val padding_290 = 290.dp
 }
