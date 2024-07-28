@@ -3,6 +3,7 @@ package com.example.rainbow.offGridModule.offGrid.uiComponent
 import android.content.Context
 import android.util.Log
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -28,7 +29,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.composenewsapp.R
 import com.example.rainbow.base.viewmodel.cc
@@ -38,7 +38,12 @@ import values.Dimens
 import kotlin.random.Random
 
 @Composable
-fun TopActiveMusicCard(modifier: Modifier = Modifier, context: Context, imageUrl: String?,topNavigationAction: (TopNavigationButtonAction) -> Unit) {
+fun TopActiveMusicCard(
+    modifier: Modifier = Modifier,
+    context: Context,
+    imageUrl: String?,
+    topNavigationAction: (TopNavigationButtonAction) -> Unit
+) {
     Box {
         AsyncImage(
             modifier = modifier
@@ -60,10 +65,12 @@ fun TopActiveMusicCard(modifier: Modifier = Modifier, context: Context, imageUrl
             contentScale = ContentScale.Crop,
             contentDescription = "music image"
         )
-        TopNavigationIcons(modifier = Modifier, iconList = listOf(
-            TopNavigationButtonAction.NavigationOtherModuleAction,
-            TopNavigationButtonAction.NavigationMoreButtonAction
-        ), topNavigationAction = topNavigationAction)
+        TopNavigationIcons(
+            modifier = Modifier, iconList = listOf(
+                TopNavigationButtonAction.NavigationOtherModuleAction,
+                TopNavigationButtonAction.NavigationMoreButtonAction
+            ), topNavigationAction = topNavigationAction
+        )
         CardDescViewBottom(
             modifier = Modifier
                 .align(Alignment.BottomStart)
@@ -100,10 +107,18 @@ fun CardDescViewBottom(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun MusicListItem(modifier: Modifier = Modifier, context: Context, songData: SongData) {
-    val defaultImg = listOf(R.drawable.ic_music_item_default_1,R.drawable.ic_music_item_default_2)[Random.nextInt(0,2)]
-    Row(modifier = modifier.fillMaxWidth()) {
-        Log.d("trackImg",songData.uriSongImage.toString() ?: "")
+fun MusicListItem(modifier: Modifier = Modifier,
+                  context: Context,
+                  songData: SongData,
+                  onSongClick:(songData: SongData)->Unit) {
+    val defaultImg = listOf(
+        R.drawable.ic_music_item_default_1,
+        R.drawable.ic_music_item_default_2
+    )[Random.nextInt(0, 2)]
+    Row(modifier = modifier.fillMaxWidth().clickable {
+        onSongClick(songData)
+    }) {
+        Log.d("trackImg", songData.uriSongImage.toString())
         AsyncImage(
             modifier = Modifier
                 .size(Dimens.padding_64)
@@ -152,7 +167,7 @@ fun MusicListItem(modifier: Modifier = Modifier, context: Context, songData: Son
 @Preview
 @Composable
 private fun MusicListItemPrev() {
-    MusicListItem(context = LocalContext.current, songData = cc)
+    MusicListItem(context = LocalContext.current, songData = cc, onSongClick = {})
 }
 
 @Preview

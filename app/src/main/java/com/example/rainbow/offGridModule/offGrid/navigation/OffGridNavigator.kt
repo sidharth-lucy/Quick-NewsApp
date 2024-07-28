@@ -9,6 +9,7 @@ import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.rainbow.offGridModule.offGrid.enums.MusicControlAction
 import com.example.rainbow.offGridModule.offGrid.enums.TopNavigationButtonAction
 import com.example.rainbow.offGridModule.offGrid.screen.OffGridMusicListScreen
 import com.example.rainbow.offGridModule.offGrid.screen.OffGridMusicPlayingScreen
@@ -27,9 +28,12 @@ fun OffGridNavigator(appModuleMenuClicked:()->Unit) {
     ) {
 
         composable(route = OffGridRoute.OffGridMusicPlayScreen.route) {
-            OffGridMusicPlayingScreen(modifier = Modifier, topNavigationButtonAction = { navType ->
-                handleNavigationButtonClick(navType,navController,appModuleMenuClicked)
-            })
+            OffGridMusicPlayingScreen(modifier = Modifier,
+                topNavigationButtonAction = { navType ->
+                    handleNavigationButtonClick(navType, navController, appModuleMenuClicked)
+                }, onMusicControlClicked = {action->
+                    handleMusicActionClick(action)
+                })
         }
 
         composable(route = OffGridRoute.OffGridMusicListScreen.route) {
@@ -44,6 +48,9 @@ fun OffGridNavigator(appModuleMenuClicked:()->Unit) {
                 allSong = viewmodel.allSongList.value,
                 topNavigationAction = {navType->
                     handleNavigationButtonClick(navType,navController,appModuleMenuClicked)
+                }, onSongClick = {song->
+                    //play pause song
+
                 })
         }
 
@@ -64,6 +71,20 @@ private fun handleNavigationButtonClick(navType:TopNavigationButtonAction,navCon
 
         TopNavigationButtonAction.NavigationOtherModuleAction -> {
             appModuleMenuClicked()
+        }
+    }
+}
+
+private fun handleMusicActionClick(action: MusicControlAction){
+    when(action){
+        is MusicControlAction.PlayNextMusic->{
+
+        }
+        is MusicControlAction.PlayPreviousMusic->{
+
+        }
+        is MusicControlAction.PlayPauseMusic->{
+
         }
     }
 }
