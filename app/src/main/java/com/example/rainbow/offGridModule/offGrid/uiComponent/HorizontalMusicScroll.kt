@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.composenewsapp.R
+import com.example.rainbow.base.viewmodel.data
 import com.example.rainbow.offGridModule.offGrid.datamodel.SongData
 import com.example.rainbow.ui.theme.Color_FFFFFF_50
 import values.Dimens
@@ -68,32 +69,7 @@ fun MusicItemComponent(modifier: Modifier = Modifier, itemData: SongData) {
 }
 
 
-val data = listOf(
-    SongData(
-        name = "OffGrid",
-        extraData = "Electro Beat",
-        duration = 180000, // 3 minutes in milliseconds
-        uriSong = Uri.parse("https://images.unsplash.com/photo-1525362081669-2b476bb628c3?q=80&w=3456&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"),
 
-        ),
-    SongData(
-        name = "Chill Vibes",
-        extraData = "Relaxing Tunes",
-        duration = 240000, // 4 minutes in milliseconds
-        uriSong = Uri.parse(""),
-    ),
-    SongData(
-        name = "Workout Mix",
-        extraData = "High Energy",
-        duration = 300000, // 5 minutes in milliseconds
-        uriSong = Uri.parse("https://example.com/songs/offgrid.mp3"),
-    ),
-    SongData(
-        name = "Evening Jazz",
-        extraData = "Smooth Jazz",
-        duration = 360000, // 6 minutes in milliseconds
-        uriSong = Uri.parse("https://example.com/songs/offgrid.mp3"),
-    ))
 
 @Preview
 @Composable

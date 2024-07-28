@@ -31,6 +31,7 @@ import androidx.compose.ui.util.lerp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.example.composenewsapp.R
+import com.example.rainbow.base.viewmodel.cc
 import com.example.rainbow.offGridModule.offGrid.datamodel.SongData
 import com.example.rainbow.ui.theme.Color_FFFFFF_50
 import values.Dimens
@@ -82,17 +83,9 @@ fun SongInformationCard(
             .clip(shape = RoundedCornerShape(Dimens.padding_20)),
 
         ) {
-        MusicItemComponent(modifier= Modifier,pageOffset=pageOffset, itemData = ccc)
+        MusicItemComponent(modifier= Modifier,pageOffset=pageOffset, itemData = cc)
     }
 }
-
-val ccc = SongData(
-    name = "Peaceful Piano Music",
-    extraData = "Relaxing Tunes",
-    duration = 240000, // 4 minutes in milliseconds
-    uriSong = Uri.parse(""),
-)
-
 
 @Composable
 fun MusicItemComponent(modifier: Modifier = Modifier,pageOffset:Float, itemData: SongData) {

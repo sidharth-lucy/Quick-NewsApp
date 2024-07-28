@@ -1,6 +1,8 @@
 package com.example.rainbow.offGridModule.offGrid.uiComponent
 
 import android.content.Context
+import android.util.Log
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -23,14 +25,20 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.composenewsapp.R
+import com.example.rainbow.base.viewmodel.cc
+import com.example.rainbow.offGridModule.offGrid.datamodel.SongData
+import com.example.rainbow.offGridModule.offGrid.enums.TopNavigationButtonAction
 import values.Dimens
+import kotlin.random.Random
 
 @Composable
-fun TopActiveMusicCard(modifier: Modifier = Modifier, context: Context, imageUrl: String?) {
+fun TopActiveMusicCard(modifier: Modifier = Modifier, context: Context, imageUrl: String?,topNavigationAction: (TopNavigationButtonAction) -> Unit) {
     Box {
         AsyncImage(
             modifier = modifier
@@ -47,11 +55,15 @@ fun TopActiveMusicCard(modifier: Modifier = Modifier, context: Context, imageUrl
             model = ImageRequest.Builder(context)
                 .data(imageUrl ?: "")
                 .placeholder(R.drawable.default_music_img)
+                .error(R.drawable.default_music_img)
                 .build(),
             contentScale = ContentScale.Crop,
             contentDescription = "music image"
         )
-        TopNavigationIcons(modifier = Modifier, topNavigationAction = {})
+        TopNavigationIcons(modifier = Modifier, iconList = listOf(
+            TopNavigationButtonAction.NavigationOtherModuleAction,
+            TopNavigationButtonAction.NavigationMoreButtonAction
+        ), topNavigationAction = topNavigationAction)
         CardDescViewBottom(
             modifier = Modifier
                 .align(Alignment.BottomStart)
@@ -88,13 +100,17 @@ fun CardDescViewBottom(modifier: Modifier = Modifier) {
 
 
 @Composable
-fun MusicListItem(modifier: Modifier = Modifier, context: Context) {
+fun MusicListItem(modifier: Modifier = Modifier, context: Context, songData: SongData) {
+    val defaultImg = listOf(R.drawable.ic_music_item_default_1,R.drawable.ic_music_item_default_2)[Random.nextInt(0,2)]
     Row(modifier = modifier.fillMaxWidth()) {
+        Log.d("trackImg",songData.uriSongImage.toString() ?: "")
         AsyncImage(
             modifier = Modifier
                 .size(Dimens.padding_64)
                 .clip(shape = RoundedCornerShape(Dimens.padding_15)),
-            model = ImageRequest.Builder(context).data("")
+            model = ImageRequest.Builder(context)
+                .data(songData.uriSongImage)
+                .error(defaultImg)
                 .placeholder(R.drawable.default_music_img).build(),
             contentDescription = "music item image",
             contentScale = ContentScale.Crop
@@ -107,7 +123,7 @@ fun MusicListItem(modifier: Modifier = Modifier, context: Context) {
             verticalArrangement = Arrangement.Center
         ) {
             Text(
-                text = "Peaceful Piano Music",
+                text = songData.name,
                 color = colorResource(
                     id = R.color.white
                 ),
@@ -118,7 +134,7 @@ fun MusicListItem(modifier: Modifier = Modifier, context: Context) {
                 overflow = TextOverflow.Ellipsis
             )
             Text(
-                text = "Relaxing Piano Music",
+                text = songData.extraData ?: "",
                 color = colorResource(
                     id = R.color.placeholder
                 ),
@@ -136,7 +152,7 @@ fun MusicListItem(modifier: Modifier = Modifier, context: Context) {
 @Preview
 @Composable
 private fun MusicListItemPrev() {
-    MusicListItem(context = LocalContext.current)
+    MusicListItem(context = LocalContext.current, songData = cc)
 }
 
 @Preview
@@ -149,5 +165,5 @@ private fun CardDescViewBottomPrev() {
 @Composable
 private fun TopActiveMusicCardPrev() {
     val context = LocalContext.current
-    TopActiveMusicCard(context = context, imageUrl = "")
+    TopActiveMusicCard(context = context, imageUrl = "", topNavigationAction = {})
 }

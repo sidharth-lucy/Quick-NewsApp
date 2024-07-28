@@ -12,6 +12,7 @@ import androidx.core.view.WindowCompat
 import androidx.lifecycle.ViewModelProvider
 import com.example.rainbow.base.navigation.BaseNavGraph
 import com.example.rainbow.base.viewmodel.MainActivityViewModel
+import com.example.rainbow.baseUtils.AppPermissionHandler
 import com.example.rainbow.ui.theme.ComposeNewsAppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +28,7 @@ class MainActivity : ComponentActivity() {
         actionBar?.hide()
         WindowCompat.setDecorFitsSystemWindows(window,false)
         viewModel.getUserAppEntry()
+        getUserPermission()
         observe()
         installSplashScreen().apply {
             setKeepOnScreenCondition{
@@ -51,4 +53,7 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    private fun getUserPermission(){
+        AppPermissionHandler.getUserAudioFileReadingPermission(this, this)
+    }
 }

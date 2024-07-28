@@ -46,6 +46,7 @@ import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.example.composenewsapp.R
+import com.example.rainbow.base.viewmodel.cc
 import com.example.rainbow.offGridModule.offGrid.datamodel.SongData
 import com.example.rainbow.ui.theme.Color_280047
 import com.example.rainbow.ui.theme.Color_FFFFFF_50
@@ -100,13 +101,6 @@ fun SongInformationCard1(
         MusicItemComponent1(modifier= Modifier,pageOffset=pageOffset, itemData = cc)
     }
 }
-
-val cc = SongData(
-    name = "Chill Vibes",
-    extraData = "Relaxing Tunes",
-    duration = 240000, // 4 minutes in milliseconds
-    uriSong = Uri.parse(""),
-)
 
 
 @Composable

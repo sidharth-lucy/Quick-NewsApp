@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.requiredWidth
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.systemBarsPadding
+import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ModalNavigationDrawer
 import androidx.compose.material3.rememberDrawerState
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.example.composenewsapp.news.navigation.NewsNavigator
 import com.example.rainbow.offGridModule.offGrid.navigation.OffGridNavigator
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 
@@ -47,14 +49,20 @@ fun AppModuleBaseNavigator() {
         when(selectedApp.value){
             AppModuleType.NEWS_APP_MODULE->{
                 NewsNavigator(appModuleMenuClicked = {
-                    scope.launch {
-                        drawerState.open()
-                    }
+                    handleAppModuleMenu(scope,drawerState)
                 })
             }
             AppModuleType.MUSIC_APP_MODULE->{
-                OffGridNavigator()
+                OffGridNavigator(appModuleMenuClicked = {
+                    handleAppModuleMenu(scope,drawerState)
+                })
             }
         }
+    }
+}
+
+private fun handleAppModuleMenu(scope:CoroutineScope,drawerState:DrawerState){
+    scope.launch {
+        drawerState.open()
     }
 }
