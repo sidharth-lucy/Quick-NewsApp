@@ -9,4 +9,8 @@ object Constants {
     const val USER_BOOKMARK_ARTICLE_TABLE = "USER_BOOKMARK_ARTICLE_TABLE"
     const val NEWS_DATABASE_NAME = "news_article_db"
 
+
+
+    const val NOTIFICATION_CHANNEL_ID = "musicplayer_channel"
+    const val FOREGROUND_SERVICE_ID= 101
 }

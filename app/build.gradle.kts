@@ -110,6 +110,8 @@ dependencies {
     kapt("androidx.room:room-compiler:$room_version")
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
+
+    implementation("androidx.media:media:1.7.0")
 }
 
 // Allow references to generated code

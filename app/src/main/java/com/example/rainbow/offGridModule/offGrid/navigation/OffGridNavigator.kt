@@ -1,6 +1,7 @@
 package com.example.rainbow.offGridModule.offGrid.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -13,6 +14,7 @@ import com.example.rainbow.offGridModule.offGrid.enums.MusicControlAction
 import com.example.rainbow.offGridModule.offGrid.enums.TopNavigationButtonAction
 import com.example.rainbow.offGridModule.offGrid.screen.OffGridMusicListScreen
 import com.example.rainbow.offGridModule.offGrid.screen.OffGridMusicPlayingScreen
+import com.example.rainbow.offGridModule.offGrid.viewmodel.MusicControlViewModel
 import com.example.rainbow.offGridModule.offGrid.viewmodel.OffGridMusicListScreenViewModel
 
 
@@ -38,7 +40,14 @@ fun OffGridNavigator(appModuleMenuClicked:()->Unit) {
 
         composable(route = OffGridRoute.OffGridMusicListScreen.route) {
             val viewmodel: OffGridMusicListScreenViewModel = hiltViewModel()
+            val musicControlViewModel:MusicControlViewModel = hiltViewModel()
             val context = LocalContext.current
+            DisposableEffect(Unit) {
+                musicControlViewModel.bindService(context)
+                onDispose {
+                    musicControlViewModel.unbindService(context)
+                }
+            }
             LaunchedEffect(key1 = true) {
                 viewmodel.getAllMusicList(context)
             }
@@ -50,7 +59,7 @@ fun OffGridNavigator(appModuleMenuClicked:()->Unit) {
                     handleNavigationButtonClick(navType,navController,appModuleMenuClicked)
                 }, onSongClick = {song->
                     //play pause song
-
+                    musicControlViewModel.playSong(song.uriSong)
                 })
         }
 
