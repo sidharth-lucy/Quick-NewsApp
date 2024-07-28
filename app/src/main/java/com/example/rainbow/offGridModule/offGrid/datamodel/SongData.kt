@@ -6,6 +6,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class SongData(
+    val id:Int,
     val name:String= "OffGrid",
     val extraData:String?,
     val duration:Long?,

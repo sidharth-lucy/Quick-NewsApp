@@ -8,11 +8,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.rainbow.base.viewmodel.data
 import com.example.rainbow.offGridModule.offGrid.datamodel.SongData
+import com.example.rainbow.offGridModule.offGrid.datamodel.SongProgressData
 import com.example.rainbow.offGridModule.offGrid.enums.MusicControlAction
 import com.example.rainbow.offGridModule.offGrid.enums.TopNavigationButtonAction
 import com.example.rainbow.offGridModule.offGrid.uiComponent.BackgroundGradient
 import com.example.rainbow.offGridModule.offGrid.uiComponent.HorizontalPagerWithAnimation
 import com.example.rainbow.offGridModule.offGrid.uiComponent.MusicControlButtons
+import com.example.rainbow.offGridModule.offGrid.uiComponent.MusicHandlerComponent
 import com.example.rainbow.offGridModule.offGrid.uiComponent.MusicTimeSlider
 import com.example.rainbow.offGridModule.offGrid.uiComponent.TopNavigationIcons
 import values.Dimens
@@ -21,7 +23,9 @@ import values.Dimens
 @Composable
 fun OffGridMusicPlayingScreen(
     modifier: Modifier = Modifier,
-    data: List<SongData> = emptyList(),
+    songData: SongData,
+    data: List<SongData>,
+    playState:SongProgressData,
     topNavigationButtonAction: (TopNavigationButtonAction) -> Unit,
     onMusicControlClicked:(action: MusicControlAction)->Unit
 ) {
@@ -29,35 +33,16 @@ fun OffGridMusicPlayingScreen(
         Column(modifier = Modifier.fillMaxWidth()) {
             TopNavigationIcons(modifier = Modifier, topNavigationAction = topNavigationButtonAction)
 
-            HorizontalPagerWithAnimation(data = data)
+            HorizontalPagerWithAnimation(data = data, songData = songData)
 
         }
-
-        Column(
-            modifier = Modifier
+        MusicHandlerComponent(
+            modifier= Modifier
                 .fillMaxWidth()
-                .align(Alignment.BottomCenter)
-        ) {
-            MusicTimeSlider(modifier = Modifier
-                .fillMaxWidth()
-                .padding(
-                    start = Dimens.padding_20,
-                    end = Dimens.padding_20,
-                    top = Dimens.padding_70
-                ),
-                currProgress = 0.2f,
-                onValueChange = {},
-                onValueChangeFinished = {}
-            )
+                .align(Alignment.BottomCenter),
+            playState = playState,
+            onMusicControlClicked=onMusicControlClicked)
 
-            MusicControlButtons(
-                modifier = Modifier.padding(
-                    vertical = Dimens.padding_70,
-                    horizontal = Dimens.padding_20
-                ),
-                onMusicControlClicked = onMusicControlClicked
-            )
-        }
 
     }
 }
@@ -66,6 +51,6 @@ fun OffGridMusicPlayingScreen(
 @Composable
 @Preview(showBackground = true)
 fun OffGridMusicPlayingScreenPrev(modifier: Modifier = Modifier) {
-    OffGridMusicPlayingScreen(modifier = Modifier, data = data, topNavigationButtonAction = {}, onMusicControlClicked = {})
+    OffGridMusicPlayingScreen(modifier = Modifier, songData = data[0], data = data, playState = SongProgressData(true,10f,1000f), topNavigationButtonAction = {}, onMusicControlClicked = {})
 }
 

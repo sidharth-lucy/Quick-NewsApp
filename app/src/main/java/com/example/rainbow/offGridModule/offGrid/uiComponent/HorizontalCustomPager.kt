@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -27,6 +29,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.util.lerp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
@@ -40,14 +43,18 @@ import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun HorizontalPagerWithAnimation(modifier: Modifier=Modifier,data: List<SongData>) {
+fun HorizontalPagerWithAnimation(modifier: Modifier=Modifier,data: List<SongData>,songData: SongData) {
     Box(
         modifier = modifier
             .fillMaxWidth()
             .background(Color.Transparent),
         contentAlignment = Alignment.Center
     ) {
-        val pagerState = rememberPagerState(pageCount = { 10 })
+        val pagerState = rememberPagerState(pageCount = { data.size })
+        val selectedIndex = data.indexOf(songData)
+        LaunchedEffect(selectedIndex) {
+            pagerState.animateScrollToPage(selectedIndex)
+        }
         HorizontalPager(
             pageSpacing = 0.dp,
             beyondBoundsPageCount = 1,
@@ -60,7 +67,8 @@ fun HorizontalPagerWithAnimation(modifier: Modifier=Modifier,data: List<SongData
                     modifier = Modifier
                         .align(Alignment.Center),
                     pagerState = pagerState,
-                    page = page
+                    page = page,
+                    currSongData = data[page]
                 )
             }
 
@@ -73,6 +81,7 @@ fun HorizontalPagerWithAnimation(modifier: Modifier=Modifier,data: List<SongData
 fun SongInformationCard(
     pagerState: PagerState,
     page: Int,
+    currSongData: SongData,
     modifier: Modifier = Modifier
 ) {
     val pageOffset = pagerState.currentPageOffsetFraction.absoluteValue
@@ -83,7 +92,7 @@ fun SongInformationCard(
             .clip(shape = RoundedCornerShape(Dimens.padding_20)),
 
         ) {
-        MusicItemComponent(modifier= Modifier,pageOffset=pageOffset, itemData = cc)
+        MusicItemComponent(modifier= Modifier,pageOffset=pageOffset, itemData = currSongData)
     }
 }
 
@@ -106,15 +115,17 @@ fun MusicItemComponent(modifier: Modifier = Modifier,pageOffset:Float, itemData:
             model = ImageRequest.Builder(context)
                 .data(itemData.uriSongImage ?: "")
                 .placeholder(R.drawable.default_music_img)
+                .error(R.drawable.default_music_img)
                 .build(),
             contentScale = ContentScale.Crop,
             contentDescription = "music image")
         Text(modifier = Modifier.padding(top = Dimens.padding_25),
             color = Color.White,
-            style = MaterialTheme.typography.labelMedium, text = itemData.name)
+            style = MaterialTheme.typography.labelMedium,
+            fontSize = 20.sp,text = itemData.name)
         Text(modifier = Modifier.padding(top = Dimens.padding_5),
             color = Color_FFFFFF_50,
-            style = MaterialTheme.typography.labelSmall,
+            style = MaterialTheme.typography.labelMedium,
             fontWeight = FontWeight.Normal,
             text = itemData.extraData ?: "")
     }

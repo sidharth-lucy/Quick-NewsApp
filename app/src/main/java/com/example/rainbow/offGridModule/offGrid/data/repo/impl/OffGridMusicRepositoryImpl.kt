@@ -100,6 +100,7 @@ class OffGridMusicRepositoryImpl @Inject constructor() : OffGridMusicRepository 
             try {
                 val songList = mutableListOf<SongData>()
                 var mediaUrl = mutableListOf<Uri>()
+                var songId = 0
                 val contentResolver: ContentResolver = context.contentResolver
 
                 if(Build.VERSION.SDK_INT> Build.VERSION_CODES.Q){
@@ -154,11 +155,12 @@ class OffGridMusicRepositoryImpl @Inject constructor() : OffGridMusicRepository 
 
                             if(uriMusic!=null){
                                 val songData = SongData(
-                                    name,
-                                    artistName,
-                                    duration,
-                                    uriMusic,
-                                    albumArtWork,
+                                    id=songId,
+                                    name=name,
+                                    extraData= artistName,
+                                    duration=duration,
+                                    uriSong=uriMusic,
+                                    uriSongImage = albumArtWork,
                                 )
                                 songList.add(songData)
                             }

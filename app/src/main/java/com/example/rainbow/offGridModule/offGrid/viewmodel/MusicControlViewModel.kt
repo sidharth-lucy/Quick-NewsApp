@@ -10,6 +10,8 @@ import android.os.IBinder
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
+import com.example.rainbow.offGridModule.offGrid.datamodel.SongData
+import com.example.rainbow.offGridModule.offGrid.datamodel.SongProgressData
 import com.example.rainbow.offGridModule.offGrid.service.MusicPlayService
 import com.example.rainbow.offGridModule.offGrid.service.MusicServiceCallback
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,6 +25,7 @@ class MusicControlViewModel @Inject constructor(application: Application): Andro
     private var musicPlayService: WeakReference<MusicPlayService>? = null
     val isServiceBound = mutableStateOf(false)
     val isPlaying = mutableStateOf(false)
+    val activeMusic:SongData?= null
 
     private val serviceConnection = object : ServiceConnection{
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -72,6 +75,22 @@ class MusicControlViewModel @Inject constructor(application: Application): Andro
 
     fun setLooping(loop: Boolean) {
         musicPlayService?.get()?.setLooping(loop)
+    }
+
+
+    fun getMusicDuration():Int?{
+        return musicPlayService?.get()?.getMusicDuration()
+    }
+
+    fun getCurrentPosition():Int?{
+        return musicPlayService?.get()?.getCurrentPosition()
+    }
+
+    fun getSongProgressData():SongProgressData{
+        val isPlaying = isPlaying
+        val progress = getCurrentPosition()
+        val getMax = getMusicDuration()
+        return SongProgressData(isPlaying.value, progress?.toFloat() ?:0f,getMax?.toFloat()?:0f)
     }
 
 }
