@@ -7,9 +7,9 @@ import android.content.Intent
 import android.content.ServiceConnection
 import android.net.Uri
 import android.os.IBinder
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import com.example.rainbow.offGridModule.offGrid.datamodel.SongData
 import com.example.rainbow.offGridModule.offGrid.datamodel.SongProgressData
 import com.example.rainbow.offGridModule.offGrid.service.MusicPlayService
@@ -25,7 +25,8 @@ class MusicControlViewModel @Inject constructor(application: Application): Andro
     private var musicPlayService: WeakReference<MusicPlayService>? = null
     val isServiceBound = mutableStateOf(false)
     val isPlaying = mutableStateOf(false)
-    val activeMusic:SongData?= null
+    var activeMusic:MutableState<SongData?> = mutableStateOf(null)
+    var activeMusicIndex:MutableState<Int?> = mutableStateOf(null)
 
     private val serviceConnection = object : ServiceConnection{
         override fun onServiceConnected(name: ComponentName?, service: IBinder?) {
@@ -61,16 +62,26 @@ class MusicControlViewModel @Inject constructor(application: Application): Andro
         }
     }
 
-    fun playSong(songUri: Uri) {
-        musicPlayService?.get()?.createMediaPlayer(songUri)
+    fun playNewSong(song: SongData,indexOfSong:Int) {
+        activeMusic.value = song
+        activeMusicIndex.value = indexOfSong
+        musicPlayService?.get()?.createMediaPlayer(song.uriSong)
+        isPlaying.value = true
+    }
+
+    fun ResumeOrStart(){
+        musicPlayService?.get()?.playSong()
+        isPlaying.value = true
     }
 
     fun pauseSong() {
         musicPlayService?.get()?.pauseSong()
+        isPlaying.value = false
     }
 
     fun stopSong() {
         musicPlayService?.get()?.stopSong()
+        isPlaying.value = false
     }
 
     fun setLooping(loop: Boolean) {

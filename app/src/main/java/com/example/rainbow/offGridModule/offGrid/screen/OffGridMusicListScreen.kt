@@ -27,7 +27,7 @@ fun OffGridMusicListScreen(
     context: Context,
     allSong: RainbowResult<List<SongData>, String>,
     topNavigationAction: (TopNavigationButtonAction) -> Unit,
-    onSongClick:(songData: SongData)->Unit
+    onSongClick:(songData: SongData,indexOfSong:Int)->Unit
 ) {
     BackgroundGradient(modifier = modifier) {
 
@@ -61,7 +61,7 @@ fun OffGridMusicListScreen(
                                     modifier = Modifier,
                                     context = context,
                                     songData = songList[indexOfSong],
-                                    onSongClick =onSongClick
+                                    onSongClick ={onSongClick(it,indexOfSong)}
                                 )
                             }
                         }

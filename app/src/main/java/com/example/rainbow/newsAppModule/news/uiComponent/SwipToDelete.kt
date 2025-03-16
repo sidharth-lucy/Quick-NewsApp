@@ -12,13 +12,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Delete
-import androidx.compose.material3.DismissDirection
-import androidx.compose.material3.DismissState
-import androidx.compose.material3.DismissValue
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.SwipeToDismiss
-import androidx.compose.material3.rememberDismissState
+import androidx.compose.material3.SwipeToDismissBox
+import androidx.compose.material3.SwipeToDismissBoxState
+import androidx.compose.material3.SwipeToDismissBoxValue
+import androidx.compose.material3.rememberSwipeToDismissBoxState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
@@ -32,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.delay
 
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun <T> SwipeToDeleteContainer(
     item: T,
@@ -43,9 +40,12 @@ fun <T> SwipeToDeleteContainer(
     var isRemoved by remember {
         mutableStateOf(false)
     }
-    val state = rememberDismissState(
+    val state = rememberSwipeToDismissBoxState(
+        positionalThreshold = {totalDistance ->
+            0.4f*totalDistance
+        },
         confirmValueChange = { value ->
-            if (value == DismissValue.DismissedToStart) {
+            if (value == SwipeToDismissBoxValue.EndToStart) {
                 isRemoved = true
                 true
             } else {
@@ -68,23 +68,21 @@ fun <T> SwipeToDeleteContainer(
             shrinkTowards = Alignment.Top
         ) + fadeOut()
     ) {
-        SwipeToDismiss(
+        SwipeToDismissBox(
             state = state,
-            background = {
+            backgroundContent = {
                 DeleteBackground(swipeDismissState = state)
             },
-            dismissContent = { content(item) },
-            directions = setOf(DismissDirection.EndToStart)
+            content = { content(item) },
         )
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DeleteBackground(
-    swipeDismissState: DismissState
+    swipeDismissState: SwipeToDismissBoxState
 ) {
-    val color = if (swipeDismissState.dismissDirection == DismissDirection.EndToStart) {
+    val color = if (swipeDismissState.dismissDirection == SwipeToDismissBoxValue.EndToStart) {
         Color.Red
     } else Color.Transparent
 

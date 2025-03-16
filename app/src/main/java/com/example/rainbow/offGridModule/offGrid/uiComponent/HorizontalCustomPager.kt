@@ -57,7 +57,7 @@ fun HorizontalPagerWithAnimation(modifier: Modifier=Modifier,data: List<SongData
         }
         HorizontalPager(
             pageSpacing = 0.dp,
-            beyondBoundsPageCount = 1,
+            beyondViewportPageCount = 1,
             state = pagerState,
             modifier = Modifier.fillMaxWidth()
         ) { page ->

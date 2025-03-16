@@ -60,6 +60,7 @@ fun NewsNavigator(appModuleMenuClicked:()->Unit) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        topBar = {},
         bottomBar = {
             if(isBottomNavVisible){
                 NewsBottomNavigationBar(Modifier, bottomNavigationItems, selected = selectedItem.value, onItemClicked = {

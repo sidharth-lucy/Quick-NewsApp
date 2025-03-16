@@ -26,7 +26,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         actionBar?.hide()
-        WindowCompat.setDecorFitsSystemWindows(window,false)
+//        WindowCompat.setDecorFitsSystemWindows(window,false)
+//        enableEdgeToEdge()
         viewModel.getUserAppEntry()
         getUserPermission()
         observe()
